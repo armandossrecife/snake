@@ -22,6 +22,28 @@ Se der algum problema:
 * Garanta que está usando o Python3 do sistema com `curses` funcional: `python3 -V`.
 * Rodar pelo Terminal.
 
+## Loop resumido do jogo
+
+```bash
+[Início] 
+   ↓
+[Inicializa terminal] → [Configura tela e cores] 
+   ↓
+[Exibe instruções] → [Aguarda tecla] 
+   ↓
+[LOOP DO JOGO]
+   ├─→ [Desenha tela]
+   ├─→ [Lê entrada]
+   ├─→ [Atualiza direção/movimento]
+   ├─→ [Verifica: comeu? colidiu? pausou? saiu?]
+   ├─→ [Ajusta velocidade se necessário]
+   └─→ [Controla tempo do frame]
+   ↓
+[Game Over?] → [Tela de fim] → [Reiniciar ou Sair]
+   ↓
+[Restaura terminal] → [Fim]
+```
+
 ## Detalhes da implementação 
 
 O arquivo snake_text.py implementa o clássico jogo da cobrinha (Snake) para o terminal, usando a biblioteca `curses` para manipulação de tela e teclado.  
