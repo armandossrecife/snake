@@ -10,7 +10,6 @@
 - Velocidade adaptativa (acelera conforme pontuação)
 - Estados: RUNNING, PAUSED, GAME_OVER
 
----
 
 ## 2. Arquitetura do Código
 
@@ -29,7 +28,6 @@
 └──────────────────────────────────────────────────────────────┘
 ```
 
----
 
 ## 3. Constantes e Configurações
 
@@ -52,7 +50,6 @@ LEFT  = (0, -1)   # coluna -1
 RIGHT = (0, 1)    # coluna +1
 ```
 
----
 
 ## 4. Estruturas de Dados
 
@@ -78,7 +75,6 @@ score = 0
 paused = False
 ```
 
----
 
 ## 5. Funções Detalhadas
 
@@ -100,7 +96,6 @@ def clamp(n, lo, hi):
 
 **Complexidade:** O(1)
 
----
 
 #### `random_empty_cell(height, width, snake, padding)`
 Retorna uma posição aleatória livre (não ocupada pela cobra).
@@ -124,7 +119,6 @@ def random_empty_cell(height, width, snake, padding=BORDER_PADDING):
 
 **Complexidade:** O(H × W) onde H=altura, W=largura
 
----
 
 #### `opposite_dir(d1, d2)`
 Verifica se duas direções são opostas (evita voltar 180°).
@@ -141,7 +135,6 @@ opposite_dir(LEFT, RIGHT) # True
 opposite_dir(UP, LEFT)    # False
 ```
 
----
 
 ### 5.2 Terminal
 
@@ -164,7 +157,6 @@ def init_screen():
 - Esconde o cursor
 - Habilita keypad para setas
 
----
 
 #### `end_screen(stdscr)`
 Restaura o terminal ao estado original.
@@ -180,7 +172,6 @@ def end_screen(stdscr):
 
 **Importância:** Sempre deve ser chamada, mesmo se ocorrer erro.
 
----
 
 ### 5.3 Desenho
 
@@ -207,7 +198,6 @@ def setup_window(stdscr):
 | 3 | Ciano | HUD |
 | 4 | Branco | Borda |
 
----
 
 #### `safe_addstr(stdscr, y, x, s, attr)`
 Escreve string na tela com tratamento de erros.
@@ -230,7 +220,6 @@ def safe_addstr(stdscr, y, x, s, attr=0):
 - Evita crash se coordenadas forem inválidas
 - Fallback para ASCII no macOS (que tem problema com caracteres unicode)
 
----
 
 #### `draw_border(stdscr, height, width)`
 Desenha a borda do campo de jogo.
@@ -243,7 +232,6 @@ Desenha a borda do campo de jogo.
 ######################  ← borda inferior
 ```
 
----
 
 #### `draw_hud(stdscr, score, speed_ms, paused)`
 Desenha o HUD no topo da tela.
@@ -252,7 +240,6 @@ Desenha o HUD no topo da tela.
  Score: 5  Velocidade: 13fps  Controles: ←↑↓→/WASD  (P)ausa (Q)uit [PAUSADO]
 ```
 
----
 
 ### 5.4 Lógica do Jogo
 
@@ -283,7 +270,7 @@ def initial_state(height, width):
  19  ########################################
 ```
 
----
+
 
 #### `next_direction(current_dir, key)`
 Converte tecla pressionada em nova direção.
@@ -311,7 +298,6 @@ def next_direction(current_dir, key):
 | ← / a / A | LEFT |
 | → / d / D | RIGHT |
 
----
 
 #### `move_snake(snake, direction)`
 Move a cobra uma posição na direção atual.
@@ -335,7 +321,6 @@ nova cabeça   corpo anterior vira cabeça
 
 **Complexidade:** O(n) onde n = tamanho da cobra
 
----
 
 #### `grow_snake(snake)`
 Aumenta a cobra em 1 segmento (não remove a cauda).
@@ -351,7 +336,6 @@ Antes: [@, o, o]
 Depois: [@, o, o, o]  ← última posição duplicada
 ```
 
----
 
 #### `hit_wall_or_self(snake, height, width)`
 Detecta colisão com parede ou corpo.
@@ -376,7 +360,6 @@ def hit_wall_or_self(snake, height, width):
 
 **Complexidade:** O(n) para checagem de colisão com corpo
 
----
 
 #### `adjust_speed(speed_ms, score)`
 Ajusta velocidade baseado na pontuação.
@@ -395,7 +378,6 @@ def adjust_speed(speed_ms, score):
 | 20 | 60 | 16.7 |
 | 23+ | 50 | 20 (máximo) |
 
----
 
 #### `game_step(stdscr, snake, direction, food, speed_ms, score, paused)`
 Executa um passo do jogo (input + update).
@@ -432,7 +414,6 @@ def game_step(stdscr, snake, direction, food, speed_ms, score, paused):
     return snake, direction, food, speed_ms, score, paused, quit, game_over
 ```
 
----
 
 ### 5.5 Renderização
 
@@ -449,7 +430,6 @@ def render(stdscr, snake, food, score, speed_ms, paused):
     stdscr.refresh()                       # Atualiza tela física
 ```
 
----
 
 #### `game_over_screen(stdscr, score)`
 Mostra tela de game over centralizada.
@@ -460,7 +440,6 @@ Mostra tela de game over centralizada.
  Pressione R para reiniciar ou Q para sair 
 ```
 
----
 
 ### 5.6 Loop Principal
 
@@ -542,7 +521,6 @@ def game_loop(stdscr):
 └──────────────────────────────────────┘
 ```
 
----
 
 ## 6. Fluxo de Execução Completo
 
@@ -614,7 +592,6 @@ def game_loop(stdscr):
                 curses.endwin()
 ```
 
----
 
 ## 7. Tratamento de Erros
 
@@ -633,7 +610,6 @@ def game_loop(stdscr):
 2. **Coordenadas inválidas** podem ocorrer em janelas redimensionadas
 3. **Race conditions** raras no terminal
 
----
 
 ## 8. Complexidade Algorítmica
 
@@ -647,7 +623,6 @@ def game_loop(stdscr):
 
 Onde n = tamanho da cobra, H = altura, W = largura do terminal.
 
----
 
 ## 9. Limitações Conhecidas
 
@@ -658,7 +633,6 @@ Onde n = tamanho da cobra, H = altura, W = largura do terminal.
 5. **Tabuleiro fixo** ao tamanho do terminal
 6. **Colisão O(n)** poderia ser O(1) com set
 
----
 
 ## 10. Como Executar
 
@@ -676,7 +650,6 @@ python3 snake_text.py
 | Q | Sair |
 | R | Reiniciar (após game over) |
 
----
 
 ## 11. Sugestões de Melhoria
 
@@ -736,7 +709,6 @@ def save_high_score(score):
     HIGH_SCORE_FILE.write_text(str(score))
 ```
 
----
 
 ## 12. Diagrama de Classes de Funções
 
@@ -792,7 +764,6 @@ def save_high_score(score):
 └─────────────────────────────────────────────────────────────────┘
 ```
 
----
 
 ## 13. Glossário
 
@@ -805,7 +776,5 @@ def save_high_score(score):
 | **HUD** | Heads-Up Display - informações mostradas na tela |
 | **game loop** | Loop principal que atualiza e renderiza o jogo |
 | **state** | Estado do jogo (snake, direction, food, score, etc) |
-
----
 
 *Documento gerado em 2026. Versão do código: snake_text.py (345 linhas)*
