@@ -214,3 +214,10 @@ if ate:
 ```
 
 Comida especial dá mais pontos e não acelera.
+
+## Telas do Jogo
+
+![Bem vindo](tela1.png)
+![Tela Principal](tela2.png)
+![Game Over](tela3.png)
+
